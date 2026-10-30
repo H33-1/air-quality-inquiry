@@ -48,7 +48,7 @@ if(form.inert)return;
 const missing=fields.find(({el})=>!el.checkValidity()||(el.type!=='radio'&&!el.value.trim()));
 if(missing){show(missing.p);missing.el.setAttribute('aria-invalid','true');alert(missing.p+'페이지: '+missing.label+' 항목을 확인해 주세요.');missing.el.focus();return}
 if(!state.graph){show(6);alert('그래프 이미지를 업로드해 주세요.');upload.focus();return}
-if(!confirm('답안과 그래프를 선생님의 구글시트와 Drive에 제출할까요?'))return;
+
 if(!state.submissionId)state.submissionId=crypto.randomUUID().replaceAll('-','');save();
 form.inert=true;submitButton.disabled=true;document.querySelector('#saveStatus').textContent='전송 중 · 접수 확인을 기다려 주세요';
 try{const result=await window.submitAirInquiry({submissionId:state.submissionId,values:{...state.values},graph:state.graph,graphName:state.graphName});state.submittedAt=result.submittedAt;state.receipt=result;save();document.querySelector('#doneText').textContent=state.values.name+'님의 탐구 활동 · '+result.submittedAt+' · 접수 번호 '+result.submissionId;document.querySelector('#done').showModal()}
